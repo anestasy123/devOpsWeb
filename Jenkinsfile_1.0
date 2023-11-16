@@ -8,7 +8,7 @@ stages{
         stage('Build'){
             steps {
                   echo 'Archiving the artifacts'
-                  archiveArtifacts artifacts: **/*.war , fingerprint: true
+                  archiveArtifacts artifacts: '**/target/*.war' , fingerprint: true
             }
             
         }
@@ -17,7 +17,7 @@ stages{
             parallel{
                 stage ("Deploy to Staging"){
                     steps {
-                        copyArtifacts filter: **/*.war , fingerprintArtifacts: true, projectName: env.JOB_NAME , selector: lastSuccessful(), target: '/opt/tomcat/webapps/'
+                        copyArtifacts filter: '**/target/*.war' , fingerprintArtifacts: true, projectName: env.JOB_NAME , selector: lastSuccessful(), target: '/opt/tomcat/webapps/'
                     }
                 }
             }
