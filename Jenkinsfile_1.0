@@ -7,14 +7,10 @@ pipeline {
 stages{
         stage('Build'){
             steps {
-                sh 'mvn clean package'
+                  echo 'Archiving the artifacts'
+                  archiveArtifacts artifacts: 'web.tar', fingerprint: true
             }
-            post {
-                success {
-                    echo 'Archiving the artifacts'
-                    archiveArtifacts artifacts: 'web.tar', fingerprint: true
-                }
-            }
+            
         }
 
         stage ('Deployments'){
